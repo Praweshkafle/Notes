@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.TodoPage" Title="To-do">
+    <AbsoluteLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0" WidthRequest="390">
+                <Frame Padding="0" Margin="10,10">
+                    <SearchBar Margin="0"/>
+                </Frame>
+            </StackLayout>
+
+            <!--<CollectionView Grid.Row="1" ItemSizingStrategy="MeasureFirstItem">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Hello My name is prawesh kafle. I am from Dhulabari</x:String>
+                        <x:String>Hello My name is prawesh kafle.</x:String>
+                        <x:String>Hello world!!</x:String>
+                        <x:String>In publishing and graphic design, Lorem ipsum is a placeholder textngful content. Lorem ipsum may be used as a placeholder before final copy is available. Wikipedia
+                        </x:String>
+                    </x:Array>
+                </CollectionView.ItemsSource>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid RowDefinitions="auto">
+                            <Frame BackgroundColor="White" Margin="15,0,10,10" Padding="10"  CornerRadius="10">
+                                <Grid RowDefinitions="auto,*">
+                                    <Label Grid.Row="0" Text="{Binding .}" LineBreakMode="TailTruncation"/>
+                                    <Label Text="June 2" Grid.Row="1"/>
+                                </Grid>
+                                <Frame.Background>
+                                    <LinearGradientBrush StartPoint="0,1"
+                             EndPoint="1,0">
+                                        <GradientStop Color="White"
+                          Offset="0.1"/>
+                                        <GradientStop Color="#f2f2f2"
+                          Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Frame.Background>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>-->
+
+        </Grid>
+        <Frame HeightRequest="30" WidthRequest="30"
+               CornerRadius="40" AbsoluteLayout.LayoutBounds="0.9,0.9,75,75"
+                 AbsoluteLayout.LayoutFlags="PositionProportional" Padding="0" >
+
+            <Label Text="+" HorizontalOptions="Center" VerticalOptions="Center" FontSize="50" TextColor="White"/>
+            <Frame.Background>
+                <LinearGradientBrush StartPoint="0,1"
+                             EndPoint="1,0">
+                    <GradientStop Color="White"
+                          Offset="0.1"/>
+                    <GradientStop Color="Gray"
+                          Offset="1.0"/>
+                </LinearGradientBrush>
+            </Frame.Background>
+        </Frame>
+    </AbsoluteLayout>
+
+</ContentPage>

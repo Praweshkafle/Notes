@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.MainTabpage"
+            xmlns:pages="clr-namespace:Notes;assembly=Notes" xmlns:pages1="clr-namespace:Notes.Views"
+            BackgroundColor="White"
+            BarTextColor="#525252" BarBackgroundColor="#f2f2f2"
+            NavigationPage.HasNavigationBar="False">
+    <pages1:ListingPage IconImageSource="list"/>
+    <pages1:TodoPage IconImageSource="todo"/>
+</TabbedPage>
