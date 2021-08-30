@@ -1,100 +1,106 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Notes.Views.ListingPage" Title="Listing"
+             x:Class="Notes.Views.ListingPage"
              xmlns:models="clr-namespace:Notes.Models"
              xmlns:viewmodels="clr-namespace:Notes.ViewModels" xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
-             x:DataType="viewmodels:ListingItemViewModel">
+             x:DataType="viewmodels:ListingItemViewModel"
+             >
     <AbsoluteLayout>
-        <ScrollView>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                <StackLayout Grid.Row="0">
-                    <Frame Padding="0" Margin="20,9" CornerRadius="40" BackgroundColor="#f2f2f2">
-                        <SearchBar x:Name="search" Margin="0,-2" Text="{Binding SearchText}" Placeholder="Search Notes" SearchCommand="{Binding SearchItemCommand}">
-                            <SearchBar.Behaviors>
-                                <xct:EventToCommandBehavior EventName="TextChanged"/>
-                            </SearchBar.Behaviors>
-                        </SearchBar>
-                    </Frame>
-                </StackLayout>
-                <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshingCommand}">
-                    <CollectionView ItemSizingStrategy="MeasureFirstItem" 
+            <StackLayout Grid.Row="0">
+                <Frame Padding="0" Margin="20,9" CornerRadius="40" BackgroundColor="#f2f2f2">
+                    <SearchBar x:Name="search" Margin="0,-2" Text="{Binding SearchText}" Placeholder="Search Notes" SearchCommand="{Binding SearchItemCommand}">
+                        <SearchBar.Behaviors>
+                            <xct:EventToCommandBehavior EventName="TextChanged"/>
+                        </SearchBar.Behaviors>
+                    </SearchBar>
+                </Frame>
+            </StackLayout>
+            <RefreshView Grid.Row="1" IsRefreshing="{Binding IsRefreshing}" Command="{Binding RefreshingCommand}">
+                <CollectionView ItemSizingStrategy="MeasureFirstItem" 
                                 FlowDirection="LeftToRight"
                                 SelectionMode="{Binding Selection}"
                                 ItemsSource="{Binding ListingItem}">
-                        <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="5" VerticalItemSpacing="10"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:ListingItems">
-                                <Grid RowDefinitions="auto">
-                                    <Frame Margin="10,0,10,10" Padding="10"  CornerRadius="10"
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="5" VerticalItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ListingItems">
+                            <Grid RowDefinitions="auto">
+                                
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal">
+                                            <VisualState.Setters>
+                                                <Setter TargetName="CheckImage" Property="IsVisible" Value="False" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter TargetName="CheckImage" Property="IsVisible" Value="True" />
+                                                <Setter Property="BackgroundColor" Value="Transparent"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Frame Margin="10,0,10,10" Padding="10"  CornerRadius="10"
                                        HasShadow="False"
                                        xct:TouchEffect.LongPressCommand="{Binding LongPressCommand,Source={RelativeSource AncestorType={x:Type viewmodels:ListingItemViewModel}}}"
                                        xct:TouchEffect.LongPressCommandParameter="{Binding .}"
                                         xct:TouchEffect.Command="{Binding PressedCommand,Source={RelativeSource AncestorType={x:Type viewmodels:ListingItemViewModel}}}"
                                         xct:TouchEffect.CommandParameter="{Binding .}"
                                        >
-                                        <Grid RowDefinitions="auto,*">
-                                            <StackLayout Orientation="Horizontal">
-                                                <Label Grid.Row="0" Text="{Binding Details}" LineBreakMode="TailTruncation" TextColor="White"/>
-                                            </StackLayout>
-                                            <Label Text="{Binding CreatedDate,StringFormat='{0:MMMM dd}'}" FontSize="Micro" TextColor="White" Grid.Row="1"/>
-                                        </Grid>
-                                        <Frame.Background>
-                                            <LinearGradientBrush StartPoint="0,1"
+                                   
+                                    <Grid RowDefinitions="auto,*">
+                                        <StackLayout Grid.Row="0" Orientation="Horizontal" HeightRequest="20">
+                                            <Label  Text="{Binding Details}" LineBreakMode="TailTruncation" TextColor="White"/>
+                                            <Image x:Name="CheckImage" Source="check"  VerticalOptions="Center" HorizontalOptions="EndAndExpand"/>
+                                        </StackLayout>
+                                        <Label Text="{Binding CreatedDate,StringFormat='{0:MMMM dd}'}" FontSize="Micro" TextColor="White" Grid.Row="1"/>
+                                    </Grid>
+                                    <Frame.Background>
+                                        <LinearGradientBrush StartPoint="0,1"
                                                                  EndPoint="1,0">
-                                                <GradientStop Color=" #f6414c"
+                                            <GradientStop Color=" #f6414c"
                           Offset="0.1"/>
-                                                <GradientStop Color="#f6414c"
+                                            <GradientStop Color="#f6414c"
                           Offset="1.0"/>
-                                            </LinearGradientBrush>
-                                        </Frame.Background>
-                                        <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding EditCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ListingItemViewModel}}}"
+                                        </LinearGradientBrush>
+                                    </Frame.Background>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding EditCommand, Source={RelativeSource AncestorType={x:Type viewmodels:ListingItemViewModel}}}"
                                                           CommandParameter="{Binding Id}"/>
-                                        </Frame.GestureRecognizers>
-                                    </Frame>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                        <CollectionView.Background>
-                            <LinearGradientBrush StartPoint="1,1"
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="1,1"
                              EndPoint="1,0">
-                                <GradientStop Color="#f6414c"
+                    <GradientStop Color="#f6414c"
                           Offset="0."/>
-                                <GradientStop Color="White"
+                    <GradientStop Color="White"
                           Offset="0.7"/>
-                            </LinearGradientBrush>
-                        </CollectionView.Background>
-                    </CollectionView>
-
-                </RefreshView>
-
-            </Grid>
-
-        </ScrollView>
-        <Frame HeightRequest="30" WidthRequest="30"
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid>
+        <Frame
                    BackgroundColor="Orange"
                    IsVisible="{Binding AddIsVisible}"
-               CornerRadius="50" AbsoluteLayout.LayoutBounds="0.9,0.9,75,75"
+               CornerRadius="50" AbsoluteLayout.LayoutBounds="0.9,0.95,60,60"
                  AbsoluteLayout.LayoutFlags="PositionProportional" Padding="0" >
 
-            <Label Text="+" HorizontalOptions="Center" VerticalOptions="Center" FontSize="50" TextColor="White"/>
-            <!--<Frame.Background>
-                    <LinearGradientBrush StartPoint="0,1"
-                             EndPoint="1,0">
-                        <GradientStop Color="#fff6b7"
-                          Offset="0.1"/>
-                        <GradientStop Color="#f6416c"
-                          Offset="1.0"/>
-                    </LinearGradientBrush>
-                </Frame.Background>-->
+            <Label Text="+" HorizontalOptions="Center" VerticalOptions="Center" FontSize="30" TextColor="White"/>
+     
             <Frame.GestureRecognizers>
                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
             </Frame.GestureRecognizers>
